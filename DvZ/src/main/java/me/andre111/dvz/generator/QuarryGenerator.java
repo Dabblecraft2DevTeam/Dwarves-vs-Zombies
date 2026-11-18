@@ -76,7 +76,7 @@ public abstract class QuarryGenerator {
 		
 		for(int xx=-radius; xx<=radius; xx++) {
 			for(int zz=-radius; zz<=radius; zz++) {
-				//Check für radius
+				//Check fÃ¼r radius
 				int size = (xx*xx) + (zz*zz);
 				if ((size </*<=*/ (radius*radius))
 				   && (size >= (radius-1)*(radius-1))) {
@@ -116,7 +116,7 @@ public abstract class QuarryGenerator {
 	private static void generateTop(World world, int x, int y, int z, int radius, int depth, int minHeight, int maxHeight) {
 		for(int xx=-radius; xx<=radius; xx++) {
 			for(int zz=-radius; zz<=radius; zz++) {
-				//Check für radius
+				//Check fÃ¼r radius
 				int size = (xx*xx) + (zz*zz);
 				if (size </*<=*/ (radius*radius)) {
 					int x2 = x + xx;

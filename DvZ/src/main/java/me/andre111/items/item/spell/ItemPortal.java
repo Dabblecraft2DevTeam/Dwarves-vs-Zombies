@@ -68,7 +68,7 @@ public class ItemPortal extends ItemSpell {
 		w.strikeLightningEffect(nloc);
 		
 		for(int i=0; i<10; i++) {
-			ItemStack it = new ItemStack(Material.ENDER_STONE, 1);
+			ItemStack it = new ItemStack(Material.END_STONE, 1);
 			ItemMeta im = it.getItemMeta();
 			im.setDisplayName(ConfigManager.getLanguage().getString("string_spell_disableportal","Disable Portal"));
 			ArrayList<String> li = new ArrayList<String>();
@@ -81,9 +81,9 @@ public class ItemPortal extends ItemSpell {
 
 		player.teleport(nloc);
 
-		player.getInventory().addItem(new ItemStack(Material.GRILLED_PORK, 64));
-		player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 95000, -20));
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 95000, 4));
+		player.getInventory().addItem(new ItemStack(Material.COOKED_PORKCHOP, 64));
+		player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 95000, -20));
+		player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 95000, 4));
 
 
 		game.enderPortal = nloc;
@@ -101,56 +101,56 @@ public class ItemPortal extends ItemSpell {
 
 		Block block = w.getBlockAt(x, y, z);
 		Block block2;
-		block.setType(Material.ENDER_STONE);
+		block.setType(Material.END_STONE);
 
 		for(int i=0; i<=4; i+=2) {
 			block2 = block.getRelative(-1-i, 0, 0);
-			block2.setType(Material.ENDER_STONE);
+			block2.setType(Material.END_STONE);
 			for(int j=-i/2; j<=i/2; j++) {
 				block2 = block.getRelative(-1-i, 0, j);
-				block2.setType(Material.ENDER_STONE);
+				block2.setType(Material.END_STONE);
 			}
 
 			block2 = block.getRelative(1+i, 0, 0);
-			block2.setType(Material.ENDER_STONE);
+			block2.setType(Material.END_STONE);
 			for(int j=-i/2; j<=i/2; j++) {
 				block2 = block.getRelative(1+i, 0, j);
-				block2.setType(Material.ENDER_STONE);
+				block2.setType(Material.END_STONE);
 			}
 
 			block2 = block.getRelative(0, 0, -1-i);
-			block2.setType(Material.ENDER_STONE);
+			block2.setType(Material.END_STONE);
 			for(int j=-i/2; j<=i/2; j++) {
 				block2 = block.getRelative(j, 0, -1-i);
-				block2.setType(Material.ENDER_STONE);
+				block2.setType(Material.END_STONE);
 			}
 
 			block2 = block.getRelative(0, 0, 1+i);
-			block2.setType(Material.ENDER_STONE);
+			block2.setType(Material.END_STONE);
 			for(int j=-i/2; j<=i/2; j++) {
 				block2 = block.getRelative(j, 0, 1+i);
-				block2.setType(Material.ENDER_STONE);
+				block2.setType(Material.END_STONE);
 			}
 		}
 
 		for(int i=-2; i<=2; i+=2) {
 			for(int j=-2; j<=2; j+=2) {
 				block2 = block.getRelative(i, 0, j);
-				block2.setType(Material.ENDER_STONE);
+				block2.setType(Material.END_STONE);
 			}
 		}
 
 		for(int i=-4; i<=4; i+=4) {
 			for(int j=-3; j<=3; j+=3) {
 				block2 = block.getRelative(i, 0, j);
-				block2.setType(Material.ENDER_STONE);
+				block2.setType(Material.END_STONE);
 			}
 		}
 
 		for(int i=-3; i<=3; i+=3) {
 			for(int j=-4; j<=4; j+=4) {
 				block2 = block.getRelative(i, 0, j);
-				block2.setType(Material.ENDER_STONE);
+				block2.setType(Material.END_STONE);
 			}
 		}
 	}

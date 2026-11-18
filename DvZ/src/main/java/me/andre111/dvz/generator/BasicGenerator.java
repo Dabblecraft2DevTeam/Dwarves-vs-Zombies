@@ -16,7 +16,7 @@ public abstract class BasicGenerator {
 	public static void generateCylinder(World world, int x, int y, int z, int radius, int depth, Material mat, byte data) {
 		for(int xx=-radius; xx<=radius; xx++) {
 			for(int zz=-radius; zz<=radius; zz++) {
-				//Check für radius
+				//Check fÃ¼r radius
 				if ((xx*xx) + (zz*zz) </*<=*/ (radius*radius)){
 					int x2 = x + xx;
 					int z2 = z + zz;

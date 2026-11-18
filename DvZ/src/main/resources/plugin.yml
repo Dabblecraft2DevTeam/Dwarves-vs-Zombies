@@ -1,10 +1,11 @@
 name: Dwarves vs Zombies
 main: me.andre111.dvz.DvZ
 version: ${project.version}
+api-version: '1.21'
 website: http://andre111.bplaced.net/
 author: andre111
 
-softdepend: [DisguiseCraft,LibsDisguises,ProtocolLib,SpellItems]
+softdepend: [LibsDisguises, ProtocolLib, SpellItems, Multiverse-Core]
 
 commands:
    dvztest:

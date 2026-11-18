@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import me.andre111.dvz.volatileCode.DeprecatedMethods;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -13,72 +11,67 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 
 public class ChunkGeneratorDvZ extends ChunkGenerator {
-	byte[] result;
-	
 	private int waterlevel = 56;
 
-	//This needs to be set to return true to override minecraft's default behaviour
+	// This needs to be set to return true to override minecraft's default behaviour
 	@Override
 	public boolean canSpawn(World world, int x, int z) {
 		return true;
 	}
-	//This converts relative chunk locations to bytes that can be written to the chunk
-	public int xyzToByte(int x, int y, int z) {
-		return (x * 16 + z) * 128 + y;
-	}
 
 	@Override
-	public byte[] generate(World world, Random rand, int chunkx, int chunkz) {
-		result = new byte[32768];
-		for(int x=0; x<16; x++)
-			for(int z=0; z<16; z++) {
-				int trueX = chunkx*16+x;
-				int trueZ = chunkz*16+z;
+	public ChunkData generateChunkData(World world, Random rand, int chunkx, int chunkz, BiomeGrid biome) {
+		ChunkData chunk = createChunkData(world);
+		for (int x = 0; x < 16; x++) {
+			for (int z = 0; z < 16; z++) {
+				int trueX = chunkx * 16 + x;
+				int trueZ = chunkz * 16 + z;
 				
-				double h = DvZGeneratorFunction.get(trueX, trueZ, world.getSeed())*127;
+				double h = DvZGeneratorFunction.get(trueX, trueZ, world.getSeed()) * 127;
 				int y;
 				int yt;
-				//stone and grass
-				for(y=0; y<h; y++) {
-					result[xyzToByte(x,y,z)] = (byte) DeprecatedMethods.getMaterialID(Material.STONE);
+				// stone and grass
+				for (y = 0; y < h; y++) {
+					chunk.setBlock(x, y, z, Material.STONE);
 					
-					//grass
-					if(y>=h-1) {
-						result[xyzToByte(x,y,z)] = (byte) DeprecatedMethods.getMaterialID(Material.GRASS);
-					//dirt
-					} else if(y>=h-5) {
-						result[xyzToByte(x,y,z)] = (byte) DeprecatedMethods.getMaterialID(Material.DIRT);
+					// grass
+					if (y >= h - 1) {
+						chunk.setBlock(x, y, z, Material.GRASS_BLOCK);
+					// dirt
+					} else if (y >= h - 5) {
+						chunk.setBlock(x, y, z, Material.DIRT);
 					}
 				}
-				//water and sand
+				// water and sand
 				yt = y;
-				for(y-=3; y<waterlevel; y++) {
-					if(y<yt)
-						result[xyzToByte(x,y,z)] = (byte) DeprecatedMethods.getMaterialID(Material.SAND);
+				for (y -= 3; y < waterlevel; y++) {
+					if (y < yt)
+						chunk.setBlock(x, y, z, Material.SAND);
 					else
-						result[xyzToByte(x,y,z)] = (byte) DeprecatedMethods.getMaterialID(Material.STATIONARY_WATER);
+						chunk.setBlock(x, y, z, Material.WATER);
 				}
-				//This will set the floor of each chunk at bedrock level to bedrock
-				result[xyzToByte(x,0,z)] = (byte) DeprecatedMethods.getMaterialID(Material.BEDROCK);
+				// This will set the floor of each chunk at bedrock level to bedrock
+				chunk.setBlock(x, 0, z, Material.BEDROCK);
 			}
-		return result;
+		}
+		return chunk;
 	}
 	
 	@Override
-    public List<BlockPopulator> getDefaultPopulators(World world) {
-        return Arrays.asList(
-        		(BlockPopulator)new SpawnPopulator(), 
-        		new BiomePopulator(),
-        		new TreeLogPopulator(),
-        		new DwarfPopulator(),
-        		new PathPopulator());
-    }
+	public List<BlockPopulator> getDefaultPopulators(World world) {
+		return Arrays.asList(
+				new SpawnPopulator(), 
+				new BiomePopulator(),
+				new TreeLogPopulator(),
+				new DwarfPopulator(),
+				new PathPopulator());
+	}
 	
 	@Override
-    public Location getFixedSpawnLocation(World world, Random random) {
-        int x = 0;//random.nextInt(200) - 100;
-        int z = 0;//random.nextInt(200) - 100;
-        int y = world.getHighestBlockYAt(x, z);
-        return new Location(world, x, y, z);
-    }
+	public Location getFixedSpawnLocation(World world, Random random) {
+		int x = 0;
+		int z = 0;
+		int y = world.getHighestBlockYAt(x, z);
+		return new Location(world, x, y, z);
+	}
 }

@@ -31,19 +31,18 @@ public class BiomePopulator extends BlockPopulator {
 				highest = highest.getRelative(0, 1, 0);
 				for(int j=0; j<2; j++) {
 					highest = highest.getRelative(0, -1, 0);
-					if(highest.getType()==Material.GRASS) {
+					if(highest.getType()==Material.GRASS_BLOCK) {
 						//grass+flowers
 						if(random.nextInt(100)<GRASS_CHANCE) {
-							world.getBlockAt(centerX+x, highest.getY()+1, centerZ+z).setType(Material.LONG_GRASS);
-							DeprecatedMethods.setBlockData(world.getBlockAt(centerX+x, highest.getY()+1, centerZ+z), (byte) 1);
+							world.getBlockAt(centerX+x, highest.getY()+1, centerZ+z).setType(Material.SHORT_GRASS);
 						}
 						
 						if(random.nextInt(100)<YELLOW_CHANCE) {
-							world.getBlockAt(centerX+x, highest.getY()+1, centerZ+z).setType(Material.YELLOW_FLOWER);
+							world.getBlockAt(centerX+x, highest.getY()+1, centerZ+z).setType(Material.DANDELION);
 						}
 						
 						if(random.nextInt(100)<RED_CHANCE) {
-							world.getBlockAt(centerX+x, highest.getY()+1, centerZ+z).setType(Material.RED_ROSE);
+							world.getBlockAt(centerX+x, highest.getY()+1, centerZ+z).setType(Material.POPPY);
 						}
 						//snow
 						if(highest.getTemperature()<0.4) {
@@ -55,7 +54,6 @@ public class BiomePopulator extends BlockPopulator {
 							if(random.nextInt(100)<DEAD_CHANCE) 
 							if(random.nextInt(100)<DEAD_CHANCE2) {
 								world.getBlockAt(centerX+x, highest.getY()+1, centerZ+z).setType(Material.DEAD_BUSH);
-								DeprecatedMethods.setBlockData(world.getBlockAt(centerX+x, highest.getY()+1, centerZ+z), (byte) 0);
 							}
 							
 							world.getBlockAt(centerX+x, highest.getY(), centerZ+z).setType(Material.SAND);
@@ -66,11 +64,11 @@ public class BiomePopulator extends BlockPopulator {
 						}
 					}
 					//waterlily
-					if(highest.getType()==Material.STATIONARY_WATER) {
+					if(highest.getType()==Material.WATER) {
 						if(highest.getHumidity()>0.8) {
 							if(random.nextInt(100)<LILY_CHANCE) 
 							if(random.nextInt(100)<LILY_CHANCE2) {
-								world.getBlockAt(centerX+x, highest.getY()+1, centerZ+z).setType(Material.WATER_LILY);
+								world.getBlockAt(centerX+x, highest.getY()+1, centerZ+z).setType(Material.LILY_PAD);
 							}
 						}
 					}

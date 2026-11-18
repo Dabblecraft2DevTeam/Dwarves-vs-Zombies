@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.generator.BlockPopulator;
@@ -19,7 +20,7 @@ public class AntiLeavesPopulator extends BlockPopulator {
 			for(int z=0; z<32; z++) {
 				for(int y=0; y<world.getMaxHeight(); y++) {
 					Block block = world.getBlockAt(x+xP, y, z+zP);
-					if(block.getType()==Material.LEAVES) {
+					if(Tag.LEAVES.isTagged(block.getType())) {
 						block.setType(Material.AIR);
 					}
 				}

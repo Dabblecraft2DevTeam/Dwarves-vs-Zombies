@@ -98,7 +98,7 @@ public class Team {
 			for(int i=0; i<=1; i++) {
 				for(int j=0; j<=1; j++) {
 					block2 = block.getRelative(i, 3, j);
-					if(block2.getType()!=Material.ENCHANTMENT_TABLE) 
+					if(block2.getType()!=Material.ENCHANTING_TABLE) 
 						destroyed++;
 				}
 			}

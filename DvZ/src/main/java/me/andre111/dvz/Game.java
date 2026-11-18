@@ -235,7 +235,7 @@ public class Game {
 	}
 	
 	//#######################################
-	//Tick für Countdown
+	//Tick fÃ¼r Countdown
 	//#######################################
 	public void tick() {
 		//Gamestatus zu Spielern senden
@@ -337,7 +337,7 @@ public class Game {
 	}
 	
 	//#######################################
-	//Tick für Countdown
+	//Tick fÃ¼r Countdown
 	//#######################################
 	private void countdownTicker() {
 		//save for cuncurrentmodification
@@ -615,7 +615,7 @@ public class Game {
 	}
 	
 	//#######################################
-	//Gehört dieser block zum monument
+	//GehÃ¶rt dieser block zum monument
 	//#######################################
 	public boolean isMonument(Block b, Team team) {
 		if(team!=null && team.hasMonument()) {
@@ -695,7 +695,7 @@ public class Game {
 	}
 	
 	//#######################################
-	//Dwarf Items hinzufügen
+	//Dwarf Items hinzufÃ¼gen
 	//#######################################
 	//NEVER CHANGE this
 	private static final UUID classselectionID = UUID.fromString("95076b00-d15a-11e3-9c1a-0800200c9a66");
@@ -907,7 +907,7 @@ public class Game {
 		}
 		
 		//TODO - recreate as special items for teams
-		if(item.getType()==Material.ENDER_STONE) ItemPortal.spellDisablePortal(this, player);
+		if(item.getType()==Material.END_STONE) ItemPortal.spellDisablePortal(this, player);
 		
 		//dragon
 		if(dragon!=null) {
@@ -929,7 +929,7 @@ public class Game {
 	}
 	
 	//#######################################
-	//Anfang des Spieles Spieler hizufügen
+	//Anfang des Spieles Spieler hizufÃ¼gen
 	//#######################################
 	public boolean addPlayer(UUID player) {
 		//nur wenn noch nicht eingetragen und spiel nicht gestartet
@@ -951,14 +951,14 @@ public class Game {
 	}
 	
 	//#######################################
-	//Spawn unverwundbar für ... Sekunden
+	//Spawn unverwundbar fÃ¼r ... Sekunden
 	//#######################################
 	public void addSpawnBuff(Player player, int time) {
 		//int time = plugin.getConfig().getInt("monster_invulnarable", 30);
 		if(time<=0) return;
 		
-		player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, time*20, 4), false);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, time*20, 6), false);
+		player.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, time*20, 4), false);
+		player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, time*20, 6), false);
 		
 		DvZ.sendPlayerMessageFormated(player, ConfigManager.getLanguage().getString("string_invulnarable","You are -0- seconds invulnarable!").replace("-0-", ""+time));
 		
@@ -1012,7 +1012,7 @@ public class Game {
 					block2.setType(Material.OBSIDIAN);
 				}
 				block2 = block.getRelative(i, 3, j);
-				block2.setType(Material.ENCHANTMENT_TABLE);
+				block2.setType(Material.ENCHANTING_TABLE);
 			}
 		}
 	}
@@ -1063,7 +1063,7 @@ public class Game {
 	}
 	
 	//#######################################
-	//Alle Spieler neu "Disguisen" - Temporärer Workaround
+	//Alle Spieler neu "Disguisen" - TemporÃ¤rer Workaround
 	//#######################################
 	public void redisguisePlayers() {
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -1348,7 +1348,7 @@ public class Game {
 	}
 	
 	//#######################################
-	//Broadcast Message nur für die Spieler
+	//Broadcast Message nur fÃ¼r die Spieler
 	//#######################################
 	public void broadcastMessage(String message) {
 		Object[] rplayers = playerstate.keySet().toArray();

@@ -26,7 +26,7 @@ public class SpawnPopulator extends BlockPopulator {
             	for (int z = -size; z <= size; z++) {
             		Vector position = center.clone().add(new Vector(x, 0, z));
             		
-            		world.getBlockAt(position.toLocation(world)).setType(Material.WOOD);
+            		world.getBlockAt(position.toLocation(world)).setType(Material.OAK_PLANKS);
             		
             		//pillars
             		if((x==-size && (z==-size || z==size))
@@ -34,9 +34,9 @@ public class SpawnPopulator extends BlockPopulator {
 	            		int y = -1;
 	            		Vector yposition = center.clone().add(new Vector(x, y, z));
 	            		Material blockMat = world.getBlockAt(yposition.toLocation(world)).getType();
-	            		while(blockMat==Material.AIR || blockMat==Material.STATIONARY_WATER || blockMat==Material.WATER) {
+	            		while(blockMat==Material.AIR || blockMat==Material.WATER) {
 	            			
-	            			world.getBlockAt(yposition.toLocation(world)).setType(Material.WOOD);
+	            			world.getBlockAt(yposition.toLocation(world)).setType(Material.OAK_PLANKS);
 	            			
 	            			y -= 1;
 	            			yposition = center.clone().add(new Vector(x, y, z));
@@ -54,19 +54,19 @@ public class SpawnPopulator extends BlockPopulator {
             			if((x==-size && (z==-size || z==size))
                      		   || (x==size && (z==-size || z==size))) {
             				
-            				world.getBlockAt(yposition.toLocation(world)).setType(Material.WOOD);
+            				world.getBlockAt(yposition.toLocation(world)).setType(Material.OAK_PLANKS);
             			}
             			
             			//fence
             			if(y==1 && (x==-size || x==size || z==-size || z==size)) {
             				
             				if(!(x==0 || z==0) && world.getBlockAt(yposition.toLocation(world)).getType()==Material.AIR)
-            					world.getBlockAt(yposition.toLocation(world)).setType(Material.FENCE);
+            					world.getBlockAt(yposition.toLocation(world)).setType(Material.OAK_FENCE);
             			}
             			
             			//top
             			if(y==5) {
-            				world.getBlockAt(yposition.toLocation(world)).setType(Material.WOOD);
+            				world.getBlockAt(yposition.toLocation(world)).setType(Material.OAK_PLANKS);
             			}
             		}
             	}

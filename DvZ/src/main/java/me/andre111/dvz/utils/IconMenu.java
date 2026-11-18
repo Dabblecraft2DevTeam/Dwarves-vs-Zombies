@@ -82,7 +82,7 @@ public class IconMenu {
     }
  
 	public void onInventoryClose(InventoryCloseEvent event) {
-		if (event.getInventory().getTitle().equals(name)  && (player == null || event.getPlayer() == player)) {
+		if (event.getView().getTitle().equals(name)  && (player == null || event.getPlayer() == player)) {
 			if(!closed) {
 				final Player p = (Player) event.getPlayer();
 				Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -97,7 +97,7 @@ public class IconMenu {
 	}
  
     public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getInventory().getTitle().equals(name) && (player == null || event.getWhoClicked() == player)) {
+        if (event.getView().getTitle().equals(name) && (player == null || event.getWhoClicked() == player)) {
             event.setCancelled(true);
             if (event.getClick() != ClickType.LEFT)
                 return;

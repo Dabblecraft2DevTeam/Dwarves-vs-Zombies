@@ -63,7 +63,7 @@ public class ItemReinforcePortal extends ItemSpell {
 			
 			w.strikeLightningEffect(nloc);
 			for(int i=0; i<10; i++) {
-				ItemStack it = new ItemStack(Material.ENDER_STONE, 1);
+				ItemStack it = new ItemStack(Material.END_STONE, 1);
 				ItemMeta im = it.getItemMeta();
 				im.setDisplayName(ConfigManager.getLanguage().getString("string_spell_disableportal","Disable Portal"));
 				ArrayList<String> li = new ArrayList<String>();
@@ -75,8 +75,8 @@ public class ItemReinforcePortal extends ItemSpell {
 			}
 			
 			player.teleport(nloc);
-			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 95000, -20));
-			player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 95000, 4));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 95000, -20));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 95000, 4));
 			
 			game.enderActive = true;
 			

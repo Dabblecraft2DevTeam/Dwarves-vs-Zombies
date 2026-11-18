@@ -28,10 +28,9 @@ public abstract class Fireworks {
 		
 		fm.addEffect(fe);
 		
-		instantExplode(fm);
-		
 		fw.setFireworkMeta(fm);
 		fw.setVelocity(new Vector(0, 0, 0));
+		fw.detonate();
 	}
 	
 	public static void spawnEffect(Location loc, Color color, Type type) {
@@ -48,14 +47,13 @@ public abstract class Fireworks {
 		
 		fm.addEffect(fe);
 		
-		instantExplode(fm);
-		
 		fw.setFireworkMeta(fm);
 		fw.setVelocity(new Vector(0, 0, 0));
+		fw.detonate();
 	}
 	
 	private static Firework spawnFirework(Location loc) {
-		return (Firework) loc.getWorld().spawnEntity(loc, EntityType.FIREWORK);
+		return (Firework) loc.getWorld().spawnEntity(loc, EntityType.FIREWORK_ROCKET);
 	}
 	
 	private static int identifier = 0;

@@ -18,38 +18,21 @@ public class DisguiseSystemHandler implements Listener {
 		//Disguise-Plugin check
 		if (Bukkit.getPluginManager().isPluginEnabled("LibsDisguises")) {
 			dsystem = SupportedDisguises.LIBSDISGUISES;
-		} else if (Bukkit.getPluginManager().isPluginEnabled("DisguiseCraft")) {
-			dsystem = SupportedDisguises.DISGUISECRAFT;
-		//} else if (Bukkit.getPluginManager().isPluginEnabled("BeTheMob")) {
-		//	dsystem = SupportedDisguises.BETHEMOB;
 		}
 			
-		if(dsystem==SupportedDisguises.NOONE) {
-			DvZ.sendPlayerMessageFormated(Bukkit.getServer().getConsoleSender(), DvZ.prefix+ChatColor.RED+"No supported disguising Plugin could be found, disabling...");
+		if (dsystem == SupportedDisguises.NOONE) {
+			DvZ.sendPlayerMessageFormated(Bukkit.getServer().getConsoleSender(), DvZ.prefix + ChatColor.RED + "No supported disguising Plugin could be found, disabling...");
 			Bukkit.getPluginManager().disablePlugin(DvZ.instance);
 			return false;
 		}
 		
-		
 		//init disguisesystem
-		DvZ.sendPlayerMessageFormated(Bukkit.getServer().getConsoleSender(), DvZ.prefix+"Using "+dsystem.getName()+" to handle Disguising");
+		DvZ.sendPlayerMessageFormated(Bukkit.getServer().getConsoleSender(), DvZ.prefix + "Using " + dsystem.getName() + " to handle Disguising");
 		
-		switch(dsystem) {
-		case DISGUISECRAFT:
-			disguisesystem = new DSystem_DisguiseCraft();
-			break;
-		//case BETHEMOB:
-		//	disguisesystem = new DSystem_BeTheMob();
-		//	break;
-		case LIBSDISGUISES:
-			disguisesystem = new DSystem_LibsDisguises();
-			break;
-		default:
-			break;
-		}
+		disguisesystem = new DSystem_LibsDisguises();
 		disguisesystem.initListeners(DvZ.instance);
 		
-		//setup playerinteract with ivalid entity stuffs
+		//setup playerinteract with invalid entity stuffs
 		setupInteractListener();
 		
 		return true;
@@ -57,24 +40,28 @@ public class DisguiseSystemHandler implements Listener {
 	
 	public static void disguiseP(Player player, String disguise) {
 		DvZDisguiseType dtype = DvZDisguiseType.getDisguise(disguise);
-		if(dtype!=null) {
+		if (dtype != null) {
 			disguisesystem.disguiseP(player, dtype);
 		} else {
-			DvZ.log("Disguise unknown - "+disguise+" - trying to let the Disguiseplugin interpret it!");
+			DvZ.log("Disguise unknown - " + disguise + " - trying to let the Disguiseplugin interpret it!");
 			disguisesystem.disguiseP(player, disguise);
 		}
 	}
 	
 	public static void undisguiseP(Player player) {
-		disguisesystem.undisguiseP(player);
+		if (disguisesystem != null) {
+			disguisesystem.undisguiseP(player);
+		}
 	}
 	
 	public static void redisguiseP(Player player) {
-		disguisesystem.redisguiseP(player);
+		if (disguisesystem != null) {
+			disguisesystem.redisguiseP(player);
+		}
 	}
 	
 	public static int newEntityID() {
-		return disguisesystem.newEntityID();
+		return disguisesystem != null ? disguisesystem.newEntityID() : 0;
 	}
 	
 	//Interact with invalid stuff listener
@@ -88,7 +75,7 @@ public class DisguiseSystemHandler implements Listener {
 	@EventHandler
 	public void onPlayerInvalidInteractEntity(final DvZInvalidInteractEvent event) {
 		Player player = event.getPlayer();
-		if(player!=null) {
+		if (player != null) {
 			//clicking on "3D-Items"
 			DvZ.item3DHandler.clickOnInvalidEntity(player, event.getTarget());
 		}

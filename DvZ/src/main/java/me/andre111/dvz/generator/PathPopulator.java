@@ -50,13 +50,13 @@ public class PathPopulator extends BlockPopulator {
 							//pilars
 							if(shouldFence(highest.getRelative(0, -1, 0).getType())) {
 								highest = highest.getRelative(0, -1, 0);
-								highest.setType(Material.FENCE);
+								highest.setType(Material.OAK_FENCE);
 							}
 							
 							if(xP%10==0 || zP%10==0) {
 								while(shouldFence(highest.getRelative(0, -1, 0).getType())) {
 									highest = highest.getRelative(0, -1, 0);
-									highest.setType(Material.FENCE);
+									highest.setType(Material.OAK_FENCE);
 								}
 							}
 						}
@@ -69,7 +69,7 @@ public class PathPopulator extends BlockPopulator {
 	public boolean shouldFence(Material mat) {
 		if(mat!=Material.STONE
 		 && mat!=Material.SAND
-		 && mat!=Material.GRASS
+		 && mat!=Material.GRASS_BLOCK
 		 && mat!=Material.DIRT) {
 			return true;
 		}

@@ -44,8 +44,8 @@ public class DragonIce extends DragonAttack {
 			return;
 		}
 		// animate
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*time, 4), false);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 20*time, 4), false);
+		player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20*time, 4), false);
+		player.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 20*time, 4), false);
 		player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, DeprecatedMethods.getMaterialID(Material.ICE));
 	}
 	

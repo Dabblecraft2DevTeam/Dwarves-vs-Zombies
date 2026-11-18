@@ -96,7 +96,7 @@ public class DragonThrow extends DragonAttack {
 	
 	private double throwvelocity = 2.75D;
 	private static int throwHeight = 4;
-	private static Material throwType = Material.STATIONARY_LAVA;
+	private static Material throwType = Material.LAVA;
 	
 	private static class ThrowAnimation extends Animation {
 		private Location start;

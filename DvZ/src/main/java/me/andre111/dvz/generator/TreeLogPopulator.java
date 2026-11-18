@@ -36,12 +36,12 @@ public class TreeLogPopulator extends BlockPopulator {
 
             Material mat = world.getBlockAt(xB, yB-1, zB).getType();
             //trees
-            if(mat==Material.GRASS ||
+            if(mat==Material.GRASS_BLOCK ||
                mat==Material.DIRT ||
-               mat==Material.LONG_GRASS) {
+               mat==Material.SHORT_GRASS ||
+               mat==Material.TALL_GRASS) {
 	            for (i1 = yB; i1 <= yB + 1 + height; ++i1) {
-	                world.getBlockAt(xB, i1, zB).setType(Material.LOG);
-	                DeprecatedMethods.setBlockData(world.getBlockAt(xB, i1, zB), (byte) 0);
+	                world.getBlockAt(xB, i1, zB).setType(Material.OAK_LOG);
 	            }
             }
             //catus

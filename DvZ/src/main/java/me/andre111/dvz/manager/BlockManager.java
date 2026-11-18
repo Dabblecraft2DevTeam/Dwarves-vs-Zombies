@@ -201,7 +201,7 @@ public class BlockManager {
 		if(event.getAction()==Action.RIGHT_CLICK_BLOCK) {
 			Block block = event.getClickedBlock();
 			
-			if(block.getType()==Material.CAKE_BLOCK) {
+			if(block.getType()==Material.CAKE) {
 				DeprecatedMethods.setBlockData(block, (byte) 0, true);
 			}
 		}

@@ -31,8 +31,6 @@ import me.andre111.dvz.utils.IconMenuHandler;
 import me.andre111.dvz.utils.Invulnerability;
 import me.andre111.dvz.utils.Item3DHandler;
 import me.andre111.dvz.utils.InventoryHandler;
-import me.andre111.dvz.utils.Metrics;
-import me.andre111.dvz.utils.Metrics.Graph;
 import me.andre111.dvz.utils.MovementStopper;
 import me.andre111.dvz.volatileCode.DvZPackets;
 import me.andre111.dvz.volatileCode.DynamicClassFunctions;
@@ -42,6 +40,7 @@ import me.andre111.items.item.spell.DvZSpellLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.WorldCreator;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -148,43 +147,6 @@ public class DvZ extends JavaPlugin {
 		HighscoreManager.loadHighscore();
 		BlockManager.loadConfig();
 		WorldManager.reload();
-		
-		try {
-		    Metrics metrics = new Metrics(this);
-		    
-		    // Plot the total amount of protections
-		    Graph graph = metrics.createGraph("Games");
-		    
-		    graph.addPlotter(new Metrics.Plotter("Started Games") {
-
-		    	@Override
-		    	public int getValue() {
-		    		int value = DvZ.startedGames;
-		    		DvZ.startedGames = 0;
-		    		return value;
-		    	}
-
-		    });
-		    graph.addPlotter(new Metrics.Plotter("Running Games") {
-
-		    	@Override
-		    	public int getValue() {
-		    		int value = 0;
-		    		for(int i=0; i<games.length; i++) {
-		    			if(games[i]!=null && games[i].isRunning()) {
-		    				value++;
-		    			}
-		    		}
-		    		return value;
-		    	}
-
-		    });
-		    
-		    metrics.start();
-		    metrics.enable();
-		} catch (IOException e) {
-		    // Failed to submit the stats :-(
-		}
 		
 		if(getConfig().getBoolean("use_lobby", true))
 			Bukkit.getServer().createWorld(new WorldCreator(this.getConfig().getString("world_prefix", "DvZ_")+"Lobby"));
@@ -395,91 +357,79 @@ public class DvZ extends JavaPlugin {
 	}
 	
 	public static boolean isPathable(Block block) {
-        return isPathable(block.getType());
+		return isPathable(block.getType());
 	}
 	public static boolean isPathable(Material material) {
+		if (material == null) return false;
+		if (material.isAir()) return true;
+		if (Tag.SAPLINGS.isTagged(material) ||
+			Tag.FLOWERS.isTagged(material) ||
+			Tag.CROPS.isTagged(material) ||
+			Tag.ALL_SIGNS.isTagged(material) ||
+			Tag.PRESSURE_PLATES.isTagged(material) ||
+			Tag.BUTTONS.isTagged(material) ||
+			Tag.RAILS.isTagged(material)) {
+			return true;
+		}
 		return
-				material == Material.AIR ||
-				material == Material.SAPLING ||
 				material == Material.WATER ||
-				material == Material.STATIONARY_WATER ||
-				material == Material.POWERED_RAIL ||
-				material == Material.DETECTOR_RAIL ||
-				material == Material.LONG_GRASS ||
 				material == Material.DEAD_BUSH ||
-				material == Material.YELLOW_FLOWER ||
-				material == Material.RED_ROSE ||
 				material == Material.BROWN_MUSHROOM ||
 				material == Material.RED_MUSHROOM ||
 				material == Material.TORCH ||
+				material == Material.WALL_TORCH ||
 				material == Material.FIRE ||
 				material == Material.REDSTONE_WIRE ||
-				material == Material.CROPS ||
-				material == Material.SIGN_POST ||
 				material == Material.LADDER ||
-				material == Material.RAILS ||
-				material == Material.WALL_SIGN ||
 				material == Material.LEVER ||
-				material == Material.STONE_PLATE ||
-				material == Material.WOOD_PLATE ||
-				material == Material.REDSTONE_TORCH_OFF ||
-				material == Material.REDSTONE_TORCH_ON ||
-				material == Material.STONE_BUTTON ||
+				material == Material.REDSTONE_TORCH ||
+				material == Material.REDSTONE_WALL_TORCH ||
 				material == Material.SNOW ||
-				material == Material.SUGAR_CANE_BLOCK ||
+				material == Material.SUGAR_CANE ||
 				material == Material.VINE ||
-				material == Material.WATER_LILY ||
-				material == Material.NETHER_STALK ||
+				material == Material.LILY_PAD ||
+				material == Material.NETHER_WART ||
 				material == Material.TRIPWIRE_HOOK ||
 				material == Material.TRIPWIRE ||
-				material == Material.POTATO ||
-				material == Material.CARROT ||
-				material == Material.WOOD_BUTTON;
+				material == Material.POTATOES ||
+				material == Material.CARROTS ||
+				material == Material.SHORT_GRASS ||
+				material == Material.TALL_GRASS;
 	}
 	public final static HashSet<Material> transparent = new HashSet<Material>();
 	static {
 		transparent.add(Material.AIR);
-		transparent.add(Material.SAPLING);
 		transparent.add(Material.WATER);
-		transparent.add(Material.STATIONARY_WATER);
-		transparent.add(Material.POWERED_RAIL);
-		transparent.add(Material.DETECTOR_RAIL);
-		transparent.add(Material.LONG_GRASS);
 		transparent.add(Material.DEAD_BUSH);
-		transparent.add(Material.YELLOW_FLOWER);
-		transparent.add(Material.RED_ROSE);
 		transparent.add(Material.BROWN_MUSHROOM);
 		transparent.add(Material.RED_MUSHROOM);
 		transparent.add(Material.TORCH);
+		transparent.add(Material.WALL_TORCH);
 		transparent.add(Material.FIRE);
-		//transparent.add((byte)55); TODO - what was that
-		//transparent.add((byte)59); TODO - what was that
-		//transparent.add((byte)63); TODO - what was that
 		transparent.add(Material.LADDER);
-		transparent.add(Material.RAILS);
-		//transparent.add((byte)68); TODO - what was that
 		transparent.add(Material.LEVER);
-		transparent.add(Material.STONE_PLATE);
-		//transparent.add((byte)71); TODO - what was that
-		transparent.add(Material.WOOD_PLATE);
-		transparent.add(Material.REDSTONE_TORCH_OFF);
-		transparent.add(Material.REDSTONE_TORCH_ON);
-		transparent.add(Material.STONE_BUTTON);
+		transparent.add(Material.REDSTONE_TORCH);
+		transparent.add(Material.REDSTONE_WALL_TORCH);
+		transparent.add(Material.REDSTONE_WIRE);
 		transparent.add(Material.SNOW);
-		//transparent.add((byte)83); TODO - what was that
+		transparent.add(Material.SUGAR_CANE);
 		transparent.add(Material.VINE);
-		transparent.add(Material.WATER_LILY);
-		//transparent.add((byte)115); TODO - what was that
+		transparent.add(Material.LILY_PAD);
+		transparent.add(Material.NETHER_WART);
 		transparent.add(Material.TRIPWIRE_HOOK);
-		//transparent.add((byte)132); TODO - what was that
-		//transparent.add((byte)141); TODO - what was that
-		//transparent.add((byte)142); TODO - what was that
-		transparent.add(Material.WOOD_BUTTON);
-		transparent.add(Material.GOLD_PLATE);
-		transparent.add(Material.IRON_PLATE);
-		transparent.add(Material.DETECTOR_RAIL);
-		transparent.add(Material.CARPET);
-		transparent.add(Material.DOUBLE_PLANT);
+		transparent.add(Material.TRIPWIRE);
+		transparent.add(Material.POTATOES);
+		transparent.add(Material.CARROTS);
+		transparent.add(Material.SHORT_GRASS);
+		transparent.add(Material.TALL_GRASS);
+		transparent.addAll(Tag.SAPLINGS.getValues());
+		transparent.addAll(Tag.FLOWERS.getValues());
+		transparent.addAll(Tag.CROPS.getValues());
+		transparent.addAll(Tag.ALL_SIGNS.getValues());
+		transparent.addAll(Tag.PRESSURE_PLATES.getValues());
+		transparent.addAll(Tag.BUTTONS.getValues());
+		transparent.addAll(Tag.RAILS.getValues());
+		transparent.addAll(Tag.CARPETS.getValues());
 	}
 	
 	public static int scheduleRepeatingTask(final Runnable task, int delay, int interval) {

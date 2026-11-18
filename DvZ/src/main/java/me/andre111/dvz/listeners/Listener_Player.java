@@ -80,7 +80,7 @@ public class Listener_Player implements Listener  {
 		}
 		
 		if (plugin.getPlayerGame(player.getUniqueId())==null && ConfigManager.getStaticConfig().getBoolean("autojoin_on_join", true)) {
-			DvZ.sendPlayerMessageFormated(player, ConfigManager.getLanguage().getString("string_motd","Welcome to this §1DvZ§f Server!"));
+			DvZ.sendPlayerMessageFormated(player, ConfigManager.getLanguage().getString("string_motd","Welcome to this \u00a71DvZ\u00a7f Server!"));
 			DvZ.sendPlayerMessageFormated(player, "--------------------------------");
 			if(ConfigManager.getStaticConfig().getBoolean("show_andre111_tag", true))
 				DvZ.sendPlayerMessageFormated(player, "Plugin by andre111");
@@ -313,7 +313,7 @@ public class Listener_Player implements Listener  {
 				prefix = "";
 				suffix = " the Plugin Author";
 			}
-			event.setFormat("§r<"+prefix+"%1$s"+suffix+"> %2$s");
+			event.setFormat("\u00a7r<"+prefix+"%1$s"+suffix+"> %2$s");
 			
 			//game dedicated chat
 			if(plugin.getConfig().getBoolean("dedicated_chat", true)) {
@@ -382,8 +382,8 @@ public class Listener_Player implements Listener  {
 		
 		//TODO - maybe change back to only monsters, but still supporting teams?
 		if (plugin.getConfig().getBoolean("item_stats", true)) {
-			if (k.getItemInHand().getAmount() > 0) {
-				ItemStack it = k.getItemInHand();
+			ItemStack it = k.getInventory().getItemInMainHand();
+			if (it != null && it.getAmount() > 0) {
 				ItemMeta im = it.getItemMeta();
 				if(im.hasLore()) {
 					String lore1 = im.getLore().get(0);

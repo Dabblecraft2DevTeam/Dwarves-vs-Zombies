@@ -7,9 +7,9 @@ import org.bukkit.entity.EntityType;
 public enum DvZDisguiseType {
 	//HOSTILE
 	ZOMBIE(EntityType.ZOMBIE, "zombie"),
-	VILLAGER_ZOMBIE(EntityType.ZOMBIE, "zombievillager", "villagerzombie", "infectedzombie", "infectedvillager"),
+	VILLAGER_ZOMBIE(EntityType.ZOMBIE_VILLAGER, "zombievillager", "villagerzombie", "infectedzombie", "infectedvillager"),
 	SKELETON(EntityType.SKELETON, "skeleton"),
-	WITHER_SKELETON(EntityType.SKELETON, "witherskeleton"),
+	WITHER_SKELETON(EntityType.WITHER_SKELETON, "witherskeleton"),
 	CREEPER(EntityType.CREEPER, "creeper"),
 	SLIME(EntityType.SLIME, "slime"),
 	WITCH(EntityType.WITCH, "witch"),
@@ -22,7 +22,7 @@ public enum DvZDisguiseType {
 	CAVE_SPIDER(EntityType.CAVE_SPIDER, "cavespider"),
 	ENDERMAN(EntityType.ENDERMAN, "enderman"),
 	WOLF(EntityType.WOLF, "wolf", "dog"),
-	ZOMBIE_PIGMAN(EntityType.PIG_ZOMBIE, "zombiepigman", "pigzombie"),
+	ZOMBIE_PIGMAN(EntityType.ZOMBIFIED_PIGLIN, "zombiepigman", "pigzombie", "zombifiedpiglin"),
 	//TAMABLE
 	OCELOT(EntityType.OCELOT, "ocelot", "cat"),
 	HORSE(EntityType.HORSE, "horse"),
@@ -34,9 +34,9 @@ public enum DvZDisguiseType {
 	SQUID(EntityType.SQUID, "squid"),
 	BAT(EntityType.BAT, "bat"),
 	VILLAGER(EntityType.VILLAGER, "villager"),
-	MOOSHROOM(EntityType.MUSHROOM_COW, "mooshroom", "mushroomcow"),
+	MOOSHROOM(EntityType.MOOSHROOM, "mooshroom", "mushroomcow"),
 	//UTILITY
-	SNOW_GOLEM(EntityType.SNOWMAN, "snowgolem", "snowman"),
+	SNOW_GOLEM(EntityType.SNOW_GOLEM, "snowgolem", "snowman"),
 	IRON_GOLEM(EntityType.IRON_GOLEM, "irongolem"),
 	//BOSSES
 	ENDER_DRAGON(EntityType.ENDER_DRAGON, "enderdragon", "dragon"),
@@ -47,8 +47,8 @@ public enum DvZDisguiseType {
 	//SPECIAL
 	//----------
     //HORSES
-    UNDEAD_HORSE(EntityType.HORSE, "undeadhorse"),
-    SKELETON_HORSE(EntityType.HORSE, "skeletonhorse"),
+    UNDEAD_HORSE(EntityType.ZOMBIE_HORSE, "undeadhorse", "zombiehorse"),
+    SKELETON_HORSE(EntityType.SKELETON_HORSE, "skeletonhorse"),
     //CHARGED
     CHARGED_CREEPER(EntityType.CREEPER, "chargedcreeper");
 	

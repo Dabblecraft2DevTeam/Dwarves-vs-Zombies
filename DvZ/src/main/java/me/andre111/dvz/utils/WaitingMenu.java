@@ -32,7 +32,7 @@ public class WaitingMenu implements Listener {
 	
 	@EventHandler(priority=EventPriority.MONITOR)
 	public void onInventoryClose(InventoryCloseEvent event) {
-		if (event.getInventory().getTitle().equals(name)) {
+		if (event.getView().getTitle().equals(name)) {
 			final Player p = (Player) event.getPlayer();
 			
 			//safety for selfoveriding and infinite loops
@@ -69,7 +69,7 @@ public class WaitingMenu implements Listener {
 	}
 	
 	public void open(Player player) {
-		Inventory inventory = Bukkit.createInventory(player, 0, name);
+		Inventory inventory = Bukkit.createInventory(player, 9, name);
 
 		player.openInventory(inventory);
 	}

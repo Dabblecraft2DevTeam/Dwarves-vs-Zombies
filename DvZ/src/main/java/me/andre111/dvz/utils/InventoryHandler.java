@@ -59,10 +59,18 @@ public class InventoryHandler {
 	//###################################
 	//Inventory Helpers
 	//###################################
+	private static boolean matchesData(ItemStack i, int data) {
+		if (data <= 0) return true;
+		if (i.hasItemMeta() && i.getItemMeta() instanceof org.bukkit.inventory.meta.Damageable) {
+			return ((org.bukkit.inventory.meta.Damageable) i.getItemMeta()).getDamage() == data;
+		}
+		return DeprecatedMethods.getDatavalue(i.getData()) == data;
+	}
+
 	public static int removeItems(Player player, Material type, int data, int remaining) {
 		int itemsExchanged = 0;
 		for (ItemStack i : player.getInventory()){
-			if (i != null && i.getType() == type && DeprecatedMethods.getDatavalue(i.getData()) == data){
+			if (i != null && i.getType() == type && matchesData(i, data)){
 				if (i.getAmount() > remaining){
 					i.setAmount(i.getAmount() - remaining);
 					itemsExchanged += remaining;
@@ -81,7 +89,7 @@ public class InventoryHandler {
 	public static int countItems(Player player, Material type, int data) {
 		int items = 0;
 		for (ItemStack i : player.getInventory()){
-			if (i != null && i.getType() == type && DeprecatedMethods.getDatavalue(i.getData()) == data){
+			if (i != null && i.getType() == type && matchesData(i, data)){
 				items += i.getAmount();
 			}
 		}

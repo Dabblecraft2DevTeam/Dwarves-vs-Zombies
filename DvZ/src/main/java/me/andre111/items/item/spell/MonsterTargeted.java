@@ -45,7 +45,7 @@ public class MonsterTargeted {/*extends MonsterAttack {
 			} catch (IllegalAccessException e) {
 			}
 		} 
-		//castVars für onHit
+		//castVars fÃ¼r onHit
 		else if(id>6) {
 			if(onHit!=null) onHit.setCastVar(id-7, var);
 		}
@@ -53,14 +53,14 @@ public class MonsterTargeted {/*extends MonsterAttack {
 	
 	@Override
 	public void setCastVar(int id, double var) {
-		//castVars für onHit
+		//castVars fÃ¼r onHit
 		if(id==1) range = var;
 		else if(id==2) fx = var==1;
 		else if(id==3) fx_Type = (int) Math.round(var);
 		else if(id==4) fx_R = (int) Math.round(var);
 		else if(id==5) fx_G = (int) Math.round(var);
 		else if(id==6) fx_B = (int) Math.round(var);
-		//castVars für onHit
+		//castVars fÃ¼r onHit
 		else {
 			if(onHit!=null) onHit.setCastVar(id-7, var);
 		}

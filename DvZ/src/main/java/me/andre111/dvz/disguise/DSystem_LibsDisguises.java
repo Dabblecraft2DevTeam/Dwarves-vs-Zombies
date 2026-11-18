@@ -22,52 +22,76 @@ public class DSystem_LibsDisguises implements DSystem, Listener {
 	
 	@Override
 	public void initListeners(DvZ plugin) {
-		DisguiseConfig.setHearSelfDisguise(true);
+		DisguiseConfig.setViewSelfDisguisesDefault(true);
 		
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	@Override
 	public void disguiseP(Player player, DvZDisguiseType disguise) {
+		MobDisguise mdis;
 		switch(disguise) {
 		case VILLAGER_ZOMBIE:
-			DisguiseAPI.disguiseToAll(player, new MobDisguise(DisguiseType.ZOMBIE_VILLAGER, !disguise.isBaby(), true));
+			mdis = new MobDisguise(DisguiseType.ZOMBIE_VILLAGER, !disguise.isBaby());
 			break;
 		case WITHER_SKELETON:
-			DisguiseAPI.disguiseToAll(player, new MobDisguise(DisguiseType.WITHER_SKELETON, !disguise.isBaby(), true));
+			mdis = new MobDisguise(DisguiseType.WITHER_SKELETON, !disguise.isBaby());
 			break;
 		//----------
 		//SPECIAL
 		//----------
 		//HORSES
 		case UNDEAD_HORSE:
-			DisguiseAPI.disguiseToAll(player, new MobDisguise(DisguiseType.UNDEAD_HORSE, !disguise.isBaby(), true));
+			mdis = new MobDisguise(DisguiseType.ZOMBIE_HORSE, !disguise.isBaby());
 			break;
 		case SKELETON_HORSE:
-			DisguiseAPI.disguiseToAll(player, new MobDisguise(DisguiseType.SKELETON_HORSE, !disguise.isBaby(), true));
+			mdis = new MobDisguise(DisguiseType.SKELETON_HORSE, !disguise.isBaby());
 			break;
 		//CHARGED
 		case CHARGED_CREEPER:
-			MobDisguise mdis = new MobDisguise(DisguiseType.CREEPER, !disguise.isBaby(), true);
-			((CreeperWatcher) mdis.getWatcher()).setPowered(true);
-			DisguiseAPI.disguiseToAll(player, mdis);
+			mdis = new MobDisguise(DisguiseType.CREEPER, !disguise.isBaby());
+			if (mdis.getWatcher() instanceof CreeperWatcher) {
+				((CreeperWatcher) mdis.getWatcher()).setPowered(true);
+			}
 			break;
 		default:
-			DisguiseAPI.disguiseToAll(player, new MobDisguise(DisguiseType.getType(disguise.getEntityType()), !disguise.isBaby(), true));
+			DisguiseType dt = DisguiseType.getType(disguise.getEntityType());
+			if (dt == null) {
+				try {
+					dt = DisguiseType.valueOf(disguise.name());
+				} catch (Exception ignored) {}
+			}
+			if (dt == null) {
+				dt = DisguiseType.ZOMBIE;
+			}
+			mdis = new MobDisguise(dt, !disguise.isBaby());
 			break;
 		}
+		mdis.setViewSelfDisguise(true);
+		mdis.setHearSelfDisguise(true);
+		DisguiseAPI.disguiseToAll(player, mdis);
 	}
+
 	@Override
 	public void disguiseP(Player player, String disguise) {
-		//EntityType et = EntityType.fromName(disguise);
-		//if(et==null) et = EntityType.valueOf(disguise);
-		EntityType et = EntityType.valueOf(disguise);
-		if(et==null) {
-			DvZ.log("Unknown Entity-Disguise: "+disguise);
-			return;
+		try {
+			EntityType et = EntityType.valueOf(disguise.toUpperCase());
+			DisguiseType dt = DisguiseType.getType(et);
+			MobDisguise mdis = new MobDisguise(dt, true);
+			mdis.setViewSelfDisguise(true);
+			mdis.setHearSelfDisguise(true);
+			DisguiseAPI.disguiseToAll(player, mdis);
+		} catch (Exception e) {
+			try {
+				DisguiseType dt = DisguiseType.valueOf(disguise.toUpperCase());
+				MobDisguise mdis = new MobDisguise(dt, true);
+				mdis.setViewSelfDisguise(true);
+				mdis.setHearSelfDisguise(true);
+				DisguiseAPI.disguiseToAll(player, mdis);
+			} catch (Exception ex) {
+				DvZ.log("Unknown Entity-Disguise: " + disguise);
+			}
 		}
-		
-		DisguiseAPI.disguiseToAll(player, new MobDisguise(DisguiseType.getType(et), true, true));
 	}
 
 	@Override
@@ -78,29 +102,28 @@ public class DSystem_LibsDisguises implements DSystem, Listener {
 	@Override
 	public void redisguiseP(Player player) {
 		Disguise dis = DisguiseAPI.getDisguise(player);
-		DisguiseAPI.undisguiseToAll(player);
-		DisguiseAPI.disguiseToAll(player, dis);
+		if (dis != null) {
+			DisguiseAPI.undisguiseToAll(player);
+			DisguiseAPI.disguiseToAll(player, dis);
+		}
 	}
 
 	@Override
 	public int newEntityID() {
 		return nextID++;
 	}
-	
-	//TODO - maybe needs rightclick detection
 
-	//TODO - check if this is really needed
 	@EventHandler
 	public void onPlayerUndisguise(UndisguiseEvent event) {
 		Entity e = event.getEntity();
-		if(!(e instanceof Player)) return;
+		if (!(e instanceof Player)) return;
 		
-		Player p = (Player) event.getEntity();
+		Player p = (Player) e;
 		Game game = DvZ.instance.getPlayerGame(p.getUniqueId());
-		if(game!=null) {
-			if(game.isRunning()) {
+		if (game != null) {
+			if (game.isRunning()) {
 				CustomClass cc = game.getClass(p.getUniqueId());
-				if(cc.getDisguise()!=null && !cc.getDisguise().equals("")) {
+				if (cc != null && cc.getDisguise() != null && !cc.getDisguise().isEmpty()) {
 					event.setCancelled(true);
 				}
 			}

@@ -28,7 +28,7 @@ public class DragonSpew extends DragonAttack {
 	@Override
 	public void cast(Entity entity) {
 		//entity.getWorld().playSound(entity.getLocation(), Sound.GHAST_FIREBALL, 1F, 1F);
-		entity.getWorld().playSound(entity.getLocation(), Sound.NOTE_STICKS, 1F, 0.4F);
+		entity.getWorld().playSound(entity.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1F, 0.4F);
 		
 		//TODO - find a better way to launch block without needing Player
 		if(entity instanceof Player) {

@@ -31,7 +31,7 @@ public class DragonBite extends DragonAttack {
 			player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*15, 0));
 		}
 		if(rand.nextDouble()*100<chance) {
-			player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*15, 0));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 20*15, 0));
 		}
 		if(rand.nextDouble()*100<chance) {
 			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20*15, 0));
